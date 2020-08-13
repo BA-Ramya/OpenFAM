@@ -442,4 +442,12 @@ void Fam_Metadata_Service_Server::run() {
     METADATA_SERVER_PROFILE_END_OPS(server_metadata_maxkeylen);
     return ::grpc::Status::OK;
 }
+::grpc::Status Fam_Metadata_Service_Server::metadata_update_memoryserver(
+    ::grpc::ServerContext *context, const ::Fam_Memservcnt_Request *request,
+    ::Fam_Metadata_Gen_Response *response) {
+    METADATA_SERVER_PROFILE_START_OPS()
+    metadataManager->metadata_update_memoryserver(request->nmemservers());
+    METADATA_SERVER_PROFILE_END_OPS(server_metadata_update_memoryserver);
+    return ::grpc::Status::OK;
+}
 } // namespace metadata

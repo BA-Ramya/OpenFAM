@@ -64,6 +64,8 @@ service Fam_Metadata_Rpc {
         returns (Fam_Metadata_Gen_Response) {}
     rpc dump_profile(Fam_Metadata_Gen_Request)
         returns (Fam_Metadata_Gen_Response) {}
+    rpc metadata_update_memoryserver(Fam_Memservcnt_Request)
+	returns (Fam_Metadata_Gen_Response) {}
 }
 
 /*
@@ -123,4 +125,8 @@ message Fam_Permission_Response {
     optional bool is_permitted = 1;
     optional int32 errorcode = 2;
     optional string errormsg = 3;
+}
+
+message Fam_Memservcnt_Request {
+    optional uint32 nmemservers = 1;
 }
