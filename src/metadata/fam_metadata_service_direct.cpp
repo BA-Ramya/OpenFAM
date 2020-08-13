@@ -196,6 +196,7 @@ class Fam_Metadata_Service_Direct::Impl_ {
                                     uint32_t gid);
 
     size_t metadata_maxkeylen();
+    void metadata_update_memoryserver(int nmemServers);
 
   private:
     // KVS for region Id tree
@@ -206,6 +207,7 @@ class Fam_Metadata_Service_Direct::Impl_ {
     GlobalPtr regionIdRoot;
     // KVS root pointer for region Name tree
     GlobalPtr regionNameRoot;
+    int memoryServerCount;
 
     bool use_meta_region;
     KvsMap *metadataKvsMap;
@@ -1955,6 +1957,11 @@ size_t Fam_Metadata_Service_Direct::Impl_::metadata_maxkeylen() {
     return regionNameKVS->MaxKeyLen();
 }
 
+void Fam_Metadata_Service_Direct::Impl_::metadata_update_memoryserver(
+    int nmemServers) {
+    memoryServerCount = nmemServers;
+}
+
 Fam_Metadata_Service_Direct::Fam_Metadata_Service_Direct(bool use_meta_reg) {
     Start(use_meta_reg);
 }
@@ -2194,6 +2201,13 @@ size_t Fam_Metadata_Service_Direct::metadata_maxkeylen() {
     ret = pimpl_->metadata_maxkeylen();
     METADATA_DIRECT_PROFILE_END_OPS(direct_metadata_maxkeylen);
     return ret;
+}
+
+void Fam_Metadata_Service_Direct::metadata_update_memoryserver(
+    int nmemServers) {
+    METADATA_DIRECT_PROFILE_START_OPS()
+    pimpl_->metadata_update_memoryserver(nmemServers);
+    METADATA_DIRECT_PROFILE_END_OPS(direct_metadata_update_memoryserver);
 }
 
 } // end namespace metadata

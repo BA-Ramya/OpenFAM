@@ -631,4 +631,20 @@ size_t Fam_Metadata_Service_Client::metadata_maxkeylen() {
     METADATA_CLIENT_PROFILE_END_OPS(client_metadata_maxkeylen);
     return (size_t)res.maxkeylen();
 }
+
+void Fam_Metadata_Service_Client::metadata_update_memoryserver(
+    int nmemServers) {
+    METADATA_CLIENT_PROFILE_START_OPS()
+    Fam_Memservcnt_Request req;
+    Fam_Metadata_Gen_Response res;
+    ::grpc::ClientContext ctx;
+
+    req.set_nmemservers(nmemServers);
+    ::grpc::Status status = stub->metadata_update_memoryserver(&ctx, req, &res);
+    if (!status.ok()) {
+        throw Metadata_Service_Exception(FAM_ERR_RPC,
+                                         (status.error_message()).c_str());
+    }
+    METADATA_CLIENT_PROFILE_END_OPS(client_metadata_update_memoryserver);
+}
 } // namespace metadata

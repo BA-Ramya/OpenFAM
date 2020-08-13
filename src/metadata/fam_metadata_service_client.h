@@ -127,7 +127,7 @@ class Fam_Metadata_Service_Client : public Fam_Metadata_Service {
                                     metadata_region_item_op_t op, uint32_t uid,
                                     uint32_t gid);
     size_t metadata_maxkeylen();
-
+    void metadata_update_memoryserver(int nmemServers);
     Fam_Metadata_Service_Client(const char *name, uint64_t port);
     ~Fam_Metadata_Service_Client();
 
